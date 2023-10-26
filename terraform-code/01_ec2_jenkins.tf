@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_instance" "devops-server" {
   ami           = "ami-053b0d53c279acc90"
   instance_type = "t2.micro"
-  key_name      = "terraform-key"
+  key_name      = "devops-key"
   //security_groups = [ "demo-sg" ]
   vpc_security_group_ids = [aws_security_group.devops-sg.id]
   subnet_id              = aws_subnet.devops-pub-subnet-01.id

@@ -90,18 +90,176 @@ Test the connection with jenkins-slave from ansible control
 ![Alt text](image-19.png)
 
 
-
-
-
-
-
-
-
-
-
-
-
 1. Test the connection  
    ```sh
    ansible -i hosts all -m ping 
    ```
+
+Write ansible playbook to install jenkins
+
+---
+- hosts: jenkins-master
+  become: true
+  tasks:
+  - name: add jenkins key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+      state: present
+
+  - name: add jenkins repo 
+    apt_repository: 
+      repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present 
+
+  - name: install java 
+    apt: 
+      name: openjdk-11-jre
+      state: present
+
+  - name: install jenkins 
+    apt: 
+      name: jenkins 
+      state: present       
+
+  - name: start jenkins service 
+    service: 
+      name: jenkins 
+      state: started 
+
+  - name: enable jenkins to start at boot time 
+    service: 
+      name: jenkins 
+      enabled: yes 
+
+Login to Jenkins-master
+![Alt text](image-8.png)
+
+jenkins is not yet installed
+![Alt text](image-16.png)
+
+Copy Ansible playbook to Ansible control
+
+![Alt text](image-20.png)
+
+Let's dry run 
+![Alt text](image-21.png)
+
+![Alt text](image-22.png)
+
+LEt's run playbook to install jenkins
+
+![Alt text](image-23.png)
+
+Ansible playbook ran successully and installed all packages for jenkins
+![Alt text](image-24.png)
+
+Verify that jenkins is running
+
+![Alt text](image-25.png)
+
+Access jenkins from browser UI
+
+<public ip>:8080
+
+![Alt text](image-26.png)
+
+
+Configure jenkins server
+
+![Alt text](image-27.png)
+
+![Alt text](image-28.png)
+
+![Alt text](image-29.png)
+
+![Alt text](image-30.png)
+
+![Alt text](image-31.png)
+
+Jenkins accessed successfully
+![Alt text](image-32.png)
+
+
+Write a playbook to set up jenkins-slave
+
+![Alt text](image-33.png)
+
+Execute playbook to setup jenkins-slave
+
+Login to jenkins-salve to chekc if maven file is present
+
+![Alt text](image-34.png)
+
+Go to Ansible control and run playbook
+
+Check it first
+![Alt text](image-35.png)
+
+![Alt text](image-36.png)
+
+apache-maven installed successfully
+![Alt text](image-37.png)
+
+apache maven uploaded to jenkin-slave
+![Alt text](image.png)
+
+![Alt text](image-1.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
